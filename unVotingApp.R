@@ -15,7 +15,7 @@ library(highcharter)
 
 # Read in the UN Voting data from the csv file
 # This data was not made available in this repository and will need to be downloaded from the source identified in the Readme file.
-df <- read.csv('/Users/jimbobeck/Documents/unvoting/6358424.csv')
+df <- read.csv('/unvoting/6358424.csv')
 
 # Add an ISO-3 code based on a mapping to the COW Code 1 to use for the choropleth map
 df$iso1 <- countrycode(df$ccode1, origin='cown', destination='iso3c')
