@@ -14,6 +14,7 @@ library(dplyr)
 library(highcharter)
 
 # Read in the UN Voting data from the csv file
+# This data was not made available in this repository and will need to be downloaded from the source identified in the Readme file.
 df <- read.csv('/Users/jimbobeck/Documents/unvoting/6358424.csv')
 
 # Add an ISO-3 code based on a mapping to the COW Code 1 to use for the choropleth map
@@ -80,10 +81,11 @@ ui <- fluidPage(
           )
         ),
         fluidRow(
-        # Show a plot of the generated distribution
+          # Output is a highcharts choropleth map with colors based on the coincidence scores with the selected country
           column(9,
              highchartOutput("out1", height="80vh")
           ),
+          # Displays output from the selected variables in table format 
           column(3,
              tableOutput("out2"),
              style = "height:80vh; overflow-y: scroll;"
@@ -95,16 +97,19 @@ ui <- fluidPage(
 # Define server logic required to draw a histogram
 server <- function(input, output) {
   
+  # Filters the data based on the selected values from the dropdowns  
   selected <- reactive(df %>%
       filter(year >= input$in2 & year <= input$in3 & country1 == input$in1)
   )
 
+  # Summarizes the average agreement score across the selected timeframe between the selected country and other UN members  
   votingData <- reactive({selected() %>%
       group_by(iso1, iso2, Country) %>%
       summarise(Coincidence = mean(agree)) %>%
       drop_na()
   })
   
+  # Selects the coincidence scores by country for the output table  
   tableData <- reactive({votingData() %>%
       subset(select=c('Country', 'Coincidence'))
   })
