@@ -44,7 +44,7 @@ clr <- c('#a50026', '#d73027', '#f46d43', '#fdae61', '#fee090', '#e0f3f8', '#abd
 # Read in the data for the map
 data(worldgeojson, package = "highcharter")
 
-# Define UI for application that draws a histogram
+# Define UI for application that draws a world choropleth map
 ui <- fluidPage(
 
     # Application title
@@ -94,7 +94,7 @@ ui <- fluidPage(
     )
 )
 
-# Define server logic required to draw a histogram
+# Define server logic required to draw a choropleth map
 server <- function(input, output) {
   
   # Filters the data based on the selected values from the dropdowns  
